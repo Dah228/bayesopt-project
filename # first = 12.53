@@ -1,0 +1,67 @@
+# first = 12.53
+# second = 12.54
+# if isapprox(first+0.01,second)
+#     println("oh")
+# elseif first == 0 || second == 0
+#     println("zero")
+# else
+#     println("fuck")
+# end
+
+
+# function eq(x)
+#     return 2*x-5
+# end
+
+# println(eq(3), " " ,eq(20))
+
+# A = [2 3 4; 5 6 7]
+# println(A[:,2])
+# A[2,1] = 14
+# println(A)
+# println(size(A), " ", length(A))
+
+# position = range(0, 5,length = 11)
+# pos_arr = collect(position)
+# len = length(pos_arr)
+# println(pos_arr[1]," ", pos_arr[end])
+# for num in 1:len-1
+#     delta = pos_arr[num+1]-pos_arr[num]
+#     println(delta)
+# end
+
+
+# x = [10, 2, 4,7,3,-3,-2,-1]
+# x = x.^2 - x.*2
+# x = x.+1
+# println(x)
+
+# A = [1 2;
+#      3 4]
+
+# B = [5 6;
+#      7 8]
+
+# rows_A, cols_A = size(A)
+# rows_B, cols_B = size(B)
+
+
+# function elem(i,j)
+#     fir = 0
+#     for row in 1:cols_A
+#         fir += A[i,row]*B[row,j]
+#     end
+#     return fir
+# end
+
+# println(elem(1,2))
+# println(A*B)
+
+
+
+
+# rng = Xoshiro(42)
+# samples = randn(rng, 1000)
+
+# println(mean(samples))
+# println(std(samples))
