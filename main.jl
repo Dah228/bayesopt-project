@@ -29,19 +29,26 @@ for x in x_grid
 end
 
 
-p = plot(x_grid,y_true)
-scatter!(x_observed,y_observed)
-display(p)
-savefig(p, "initial_observations.png")
+
 
 println(matrix_kor(x_observed,x_observed,kernel_length,kernel_sko))
 
 model = gauss_process(x_observed,y_observed,kernel_length,kernel_sko,noise_dispersion,jitter)
-matr = matrix_kor(x_observed,x_observed,kernel_length,kernel_sko)
-identity_matrix = Matrix{Float64}(I, length(x_observed), length(x_observed))
-C_matr = matr + (noise_dispersion + jitter)*identity_matrix
+# matr = matrix_kor(x_observed,x_observed,kernel_length,kernel_sko)
+# identity_matrix = Matrix{Float64}(I, length(x_observed), length(x_observed))
+# C_matr = matr + (noise_dispersion + jitter)*identity_matrix
 
 println(model.alpha)
+predicted_cort =predict_data(model,x_grid)
+mu = predicted_cort.mu
+interval = 1.96.*sqrt.(predicted_cort.vect_disp_function)
 # println(C_matr*model.alpha)
 # println(y_observed)
+
+p = plot(x_grid, y_true; label="Настоящая функция")
+scatter!(p, x_observed, y_observed; label="Измерения")
+plot!(p, x_grid, mu; ribbon=interval, label="Прогноз", fillalpha=0.2)
+
+display(p)
+savefig(p, "initial_observations.png")
 

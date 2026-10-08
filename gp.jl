@@ -25,7 +25,26 @@ function gauss_process(x_observed,y_observed, kernel_length, kernel_sko, noise_d
             rethrow(e) # Если ошибка другая (например, BoundsError), пробрасываем её дальше
         end
     end
-      
-  
 
+end
+
+function predict_data(model_gauss_proc_res, coords_array_x_for_prediction)
+    k_star = matrix_kor(model_gauss_proc_res.x_observed,coords_array_x_for_prediction,model_gauss_proc_res.kernel_length, model_gauss_proc_res.kernel_sko)
+    mu = transpose(k_star)*model_gauss_proc_res.alpha
+    V = model_gauss_proc_res.chol.L \ k_star
+    vect_disp_function = Vector{Float64}(undef, length(coords_array_x_for_prediction))
+    for j in 1:size(V)[2]
+        sums = 0.0
+        for i in 1:size(V)[1]
+            sums += (V[i,j])^2 
+        end
+        vect_disp_function[j] = (model_gauss_proc_res.kernel_sko)^2 - sums
+    end
+    vect_disp_observed = copy(vect_disp_function).+model_gauss_proc_res.noise_dispersion
+
+    return (
+            mu = mu,
+            vect_disp_function = vect_disp_function,
+            vect_disp_observed = vect_disp_observed
+    )
 end
