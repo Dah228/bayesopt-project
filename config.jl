@@ -4,7 +4,7 @@ grid_size = 1000
 
 noise_sko = 0.1
 noise_dispersion = noise_sko^2
-
+ucb_kappa = 2.0
 seed = 42
 initial_points = 5
 budget = 30

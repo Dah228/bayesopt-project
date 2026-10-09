@@ -38,7 +38,16 @@ function predict_data(model_gauss_proc_res, coords_array_x_for_prediction)
         for i in 1:size(V)[1]
             sums += (V[i,j])^2 
         end
-        vect_disp_function[j] = (model_gauss_proc_res.kernel_sko)^2 - sums
+        delta = (model_gauss_proc_res.kernel_sko)^2 - sums
+        if -1e-7 <= delta < 0
+            delta = 0
+            vect_disp_function[j] = delta
+        elseif delta>=0
+            vect_disp_function[j] = delta
+        else 
+            throw(ArgumentError("дисперсия не является положительно определённой!"))
+        end
+        
     end
     vect_disp_observed = copy(vect_disp_function).+model_gauss_proc_res.noise_dispersion
 
