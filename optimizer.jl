@@ -60,7 +60,15 @@ function optimize(x_grid,budget,ucb_kappa,noise_sko,rng_noise,
         
     end
     model = gauss_process(x_observed, y_observed,
-    kernel_length, kernel_sko, noise_dispersion, jitter)    
+    kernel_length, kernel_sko, noise_dispersion, jitter) 
+    
+    forecast = predict_data(model,x_grid)
+    rec_idx = argmax(forecast.mu)
+
+    recommended_x = x_grid[rec_idx]
+    recommended_mean = forecast.mu[rec_idx]
+    recommended_disp = forecast.vect_disp_function[rec_idx]
+    # predicted_sko = sqrt(predicted_disp)
 
 
     return (
@@ -68,7 +76,10 @@ function optimize(x_grid,budget,ucb_kappa,noise_sko,rng_noise,
         x_coords = x_observed,
         y_coords = y_observed,
         acquisition_history = acquisition_history,
-        strategy = strategy
+        strategy = strategy,
+        recommended_x = recommended_x,
+        recommended_mean = recommended_mean,
+        recommended_disp = recommended_disp
     )
 
 end

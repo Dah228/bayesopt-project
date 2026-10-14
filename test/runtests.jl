@@ -1,8 +1,8 @@
 using Test
 using LinearAlgebra
 
-include("gp.jl")
-include("kernel.jl")
+include("../gp.jl")
+include("../kernel.jl")
 
 
 x_obser = [0.0,1.0,2.0]

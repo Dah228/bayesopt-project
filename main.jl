@@ -51,15 +51,24 @@ scores = EI(mu, predicted_cort.vect_disp_function, b_koef)
 ind_max = argmax(scores)
 x_next = x_grid[ind_max]
 
+
+
 p1 = plot(x_grid, y_true; label="Настоящая функция")
 scatter!(p1, opt.x_coords, opt.y_coords; label="Измерения")
 plot!(p1, x_grid, mu;
     ribbon=interval, label="Прогноз", fillalpha=0.2)
 vline!(p1, [x_next];
     label="Следующая точка по EI", linestyle=:dash)
+vline!(p1,[opt.recommended_x];
+    label="recommended_x", linestyle=:dash)
+
 
 p2 = plot(x_grid, scores; label="EI", xlabel="x", ylabel="Оценка")
 scatter!(p2, [x_next], [scores[ind_max]]; label="Максимум EI")
+vline!(p2, [opt.recommended_x];
+    label="recommended_x", linestyle=:dash)
+
+
 
 p = plot(p1, p2; layout=(2, 1))
 display(p)
